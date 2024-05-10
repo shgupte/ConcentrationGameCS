@@ -3,9 +3,8 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Concentration.lib;
 
-public interface GameEntity {
+public interface ISystemManager {
     void Update(GameTime gameTime);
 
-    void Draw(SpriteBatch spriteBatch, GameTime gameTime);
 
 }

@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace TrexRunner.Graphics
+namespace Concentration.lib.Graphics
 {
     public class Sprite
     {

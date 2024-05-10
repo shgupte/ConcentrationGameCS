@@ -7,6 +7,8 @@ using Microsoft.VisualBasic;
 using System;
 using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
+using NOptional;
+using System.Runtime.InteropServices;
 
 namespace Concentration.Entities;
 public enum CardSuit {
@@ -15,13 +17,13 @@ public enum CardSuit {
     HEART,
     DIAMOND
 }
-public class Card : GameEntity {
-
-    int height = Constants.GameConstants.kCardHeight;
-    int width = Constants.GameConstants.kCardWidth;
-
-    Vector2 position = new Vector2(0, 0);
-
+//At some point I should rewrite some of these definitions to make getters and setters consistent.
+public class Card : IGameEntity {
+    bool cardIsSelected {get; set;} = false;
+    bool cardIsHovered {get; set;} = false;
+    const int height = 36;
+    const int width = 25;
+    IOptional<Vector2> position = Optional.Empty<Vector2>();
     private Texture2D spritesheet;
     public CardSuit suit;
     public int number;
@@ -63,10 +65,23 @@ public class Card : GameEntity {
 
         return new Rectangle(px, py, width, height);
     }
+
+    public Card withPosition(Vector2 pos) {
+        position = Optional.Of(pos);
+        return this;
+    }
+
+    public void setPosition(Vector2 pos) {
+        position = Optional.Of(pos);
+    }   
     
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
-        spriteBatch.Draw(spritesheet, position, getSheetSpace(), Color.White);
+        if (position.IsEmpty()) {
+            return;
+        }
+
+        spriteBatch.Draw(spritesheet, position.GetValueOrElse(()=> new Vector2(0, 0)), getSheetSpace(), Color.White);
     }
 
     public void Update(GameTime gameTime)
