@@ -35,4 +35,8 @@ public class CardManager : EntityManager
             i++;
         }
     }
+
+    public void HandleCards(){
+        
+    }
 }

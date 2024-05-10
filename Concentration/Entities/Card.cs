@@ -9,6 +9,7 @@ using System.Runtime.CompilerServices;
 using System.Reflection.Metadata;
 using NOptional;
 using System.Runtime.InteropServices;
+using System.Diagnostics.CodeAnalysis;
 
 namespace Concentration.Entities;
 public enum CardSuit {
@@ -17,10 +18,15 @@ public enum CardSuit {
     HEART,
     DIAMOND
 }
+
+public enum CardState {
+    FLIPPED,
+    HIDDEN,
+    REMOVED
+}
 //At some point I should rewrite some of these definitions to make getters and setters consistent.
 public class Card : IGameEntity {
-    bool cardIsSelected {get; set;} = false;
-    bool cardIsHovered {get; set;} = false;
+    bool locked = false;
     const int height = 36;
     const int width = 25;
     IOptional<Vector2> position = Optional.Empty<Vector2>();
@@ -29,10 +35,12 @@ public class Card : IGameEntity {
     public int number;
     public Color color; 
 
+    public CardState state = CardState.HIDDEN;
+
     public Card(CardSuit suit, int number, Texture2D spritesheet) {
         this.spritesheet = spritesheet;
         this.suit = suit;
-        this. number = number;
+        this.number = number;
         number = Math.Clamp(number, 1, 13);
         
         if (suit == CardSuit.SPADE || suit == CardSuit.CLUB) {
@@ -40,24 +48,30 @@ public class Card : IGameEntity {
         } else {
             this.color = Color.Red;
         }
+
     }
 
     //Cuts a sprite out from the spritesheet. This method is confirmed to work correctly.
     private Rectangle getSheetSpace() {
-        int px, py = 0;
+        int px = 0;
+        int py = 0;
+
+        if (state == CardState.HIDDEN) {
+            return new Rectangle(14 * width, 3 * py, width, height);
+        }
 
         switch (suit) {
             case CardSuit.CLUB:
                 py = 0;
                 break;
             case CardSuit.DIAMOND:
-                py = 1 * height + 1;
+                py = 1 * height;
                 break;
             case CardSuit.SPADE:
-                py = 2 * height + 1;
+                py = 2 * height;
                 break;
             case CardSuit.HEART:
-                py = 3 * height + 1;
+                py = 3 * height;
                 break;
         }
         
@@ -84,8 +98,35 @@ public class Card : IGameEntity {
         spriteBatch.Draw(spritesheet, position.GetValueOrElse(()=> new Vector2(0, 0)), getSheetSpace(), Color.White);
     }
 
+    public Vector2 GetPosition() {
+        return position.GetValueOrElse(() => new Vector2(0, 0));
+    }
+
+    public Rectangle GetSpace() {
+        if (!position.IsEmpty()) {
+            return new Rectangle(GetPosition().ToPoint(), new Point(width, height));
+        } else {
+            throw new Exception();
+        }
+    }
+
+    public bool IsHovered() {
+        return GetSpace().Contains(Inputs.GetMouseCoords());
+    }
+
+    public void ProcessMouseInput(){
+
+        if (locked) return;
+        Point cursor = Inputs.GetMouseCoords();
+        if (IsHovered() && state == CardState.HIDDEN && Inputs.GetMouseLeftPressed()) {
+            this.state = CardState.FLIPPED;
+        } else if (IsHovered() && state == CardState.HIDDEN && !Inputs.GetMouseLeftPressed()) {
+            //Add card hover outline
+        }
+    }
+
     public void Update(GameTime gameTime)
-    {
+    {       
        
     }
 }
