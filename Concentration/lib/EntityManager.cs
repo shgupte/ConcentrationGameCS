@@ -14,7 +14,7 @@ public class EntityManager : ISystemManager {
     private readonly List<IGameEntity> m_EntitiesToRemove = new List<IGameEntity>();
 
 
-    public void Update(GameTime gameTime) {
+    public void UpdateEntities(GameTime gameTime) {
 
         foreach (IGameEntity entity in m_LiveEntities) {
             if (m_EntitiesToRemove.Contains(entity)) {
@@ -46,8 +46,15 @@ public class EntityManager : ISystemManager {
         m_LiveEntities.Add(entity);
     }
 
+    public void DespawnEntity(IGameEntity entity) {
+        m_EntitiesToRemove.Add(entity);
+    }
+
+    public int GetLiveEntitiesCount() {
+        return m_LiveEntities.Count;
+    }
+
     public IEnumerable<T> queryEntitiesOfType<T>() where T : IGameEntity {
         return m_LiveEntities.OfType<T>();
     }
-
 }

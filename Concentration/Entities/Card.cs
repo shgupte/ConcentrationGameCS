@@ -24,6 +24,7 @@ public enum CardState {
     HIDDEN,
     REMOVED
 }
+
 //At some point I should rewrite some of these definitions to make getters and setters consistent.
 public class Card : IGameEntity {
     bool locked = false;
@@ -34,8 +35,9 @@ public class Card : IGameEntity {
     public CardSuit suit;
     public int number;
     public Color color; 
-
     public CardState state = CardState.HIDDEN;
+
+
 
     public Card(CardSuit suit, int number, Texture2D spritesheet) {
         this.spritesheet = spritesheet;
@@ -93,11 +95,17 @@ public class Card : IGameEntity {
     public void setPosition(Vector2 pos) {
         position = Optional.Of(pos);
     }   
-    
-   
 
     public Vector2 GetPosition() {
         return position.GetValueOrElse(() => new Vector2(0, 0));
+    }
+
+    public void Flip() {
+        state = CardState.FLIPPED;
+    }
+
+    public void Hide() {
+        state = CardState.HIDDEN;
     }
 
     public Rectangle GetSpace() {
@@ -112,12 +120,20 @@ public class Card : IGameEntity {
         return GetSpace().Contains(Inputs.GetMouseCoords());
     }
 
-    public void ProcessMouseInput(){
+    public void Lock() {
+        locked = true;
+    }
 
+    public void Unlock() {
+        locked = false;
+    }
+
+    public void ProcessMouseInput(){
         if (locked) return;
         Point cursor = Inputs.GetMouseCoords();
         if (IsHovered() && state == CardState.HIDDEN && Inputs.GetMouseLeftClick()) {
             this.state = CardState.FLIPPED;
+            locked = true;
         } else if (IsHovered() && state == CardState.HIDDEN && !Inputs.GetMouseLeftClick()) {
             //Add card hover outline
         } else if (IsHovered() && state == CardState.FLIPPED && Inputs.GetMouseLeftClick()) {
