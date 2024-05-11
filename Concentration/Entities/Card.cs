@@ -55,12 +55,14 @@ public class Card : IGameEntity {
     private Rectangle getSheetSpace() {
         int px = 0;
         int py = 0;
+        Rectangle rect = new Rectangle(new Point(0, 0), new Point(0, 0));
 
         if (state == CardState.HIDDEN) {
-            return new Rectangle(14 * width, 3 * py, width, height);
+            rect = new Rectangle(14 * width, 3 * py, width, height);
         }
-
-        switch (suit) {
+        
+        if (state == CardState.FLIPPED) {
+            switch (suit) {
             case CardSuit.CLUB:
                 py = 0;
                 break;
@@ -73,11 +75,14 @@ public class Card : IGameEntity {
             case CardSuit.HEART:
                 py = 3 * height;
                 break;
-        }
+            }
         
-        px = width * (number - 1);
+            px = width * (number - 1);
+            rect = new Rectangle(px, py, width, height);
+        }
 
-        return new Rectangle(px, py, width, height);
+        return rect;
+
     }
 
     public Card withPosition(Vector2 pos) {
@@ -89,14 +94,7 @@ public class Card : IGameEntity {
         position = Optional.Of(pos);
     }   
     
-    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
-    {
-        if (position.IsEmpty()) {
-            return;
-        }
-
-        spriteBatch.Draw(spritesheet, position.GetValueOrElse(()=> new Vector2(0, 0)), getSheetSpace(), Color.White);
-    }
+   
 
     public Vector2 GetPosition() {
         return position.GetValueOrElse(() => new Vector2(0, 0));
@@ -118,15 +116,24 @@ public class Card : IGameEntity {
 
         if (locked) return;
         Point cursor = Inputs.GetMouseCoords();
-        if (IsHovered() && state == CardState.HIDDEN && Inputs.GetMouseLeftPressed()) {
+        if (IsHovered() && state == CardState.HIDDEN && Inputs.GetMouseLeftClick()) {
             this.state = CardState.FLIPPED;
-        } else if (IsHovered() && state == CardState.HIDDEN && !Inputs.GetMouseLeftPressed()) {
+        } else if (IsHovered() && state == CardState.HIDDEN && !Inputs.GetMouseLeftClick()) {
             //Add card hover outline
+        } else if (IsHovered() && state == CardState.FLIPPED && Inputs.GetMouseLeftClick()) {
+            this.state = CardState.HIDDEN;
         }
     }
 
+    public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
+    {
+        if (position.IsEmpty()) {
+            return;
+        }
+        spriteBatch.Draw(spritesheet, position.GetValueOrElse(()=> new Vector2(0, 0)), getSheetSpace(), Color.White);
+    }
     public void Update(GameTime gameTime)
     {       
-       
+       ProcessMouseInput();
     }
 }
