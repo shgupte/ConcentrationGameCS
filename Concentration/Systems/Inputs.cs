@@ -5,13 +5,16 @@ using Microsoft.Xna.Framework.Graphics;
 using System.Runtime.ConstrainedExecution;
 using System;
 
-
+/**Static inputs class that is used globally*/
 public static class Inputs {
-   private static DebouncedInput MouseLeft = new DebouncedInput(
+
+
+  //Do NOT put any print statement that include uses of SingledInput "Get()" function.
+   private static SingledInput MouseLeft = new SingledInput(
      () => Mouse.GetState().LeftButton == ButtonState.Pressed,
      () => Mouse.GetState().LeftButton == ButtonState.Released);
 
-   private static DebouncedInput MouseRight = new DebouncedInput(
+   private static SingledInput MouseRight = new SingledInput(
      () => Mouse.GetState().RightButton == ButtonState.Pressed,
      () => Mouse.GetState().RightButton == ButtonState.Released);
 
@@ -22,7 +25,7 @@ public static class Inputs {
    }
 
    public static bool GetMouseLeftClick() {
-     Console.WriteLine(MouseLeft.Get());
+        
         return MouseLeft.Get();
    }
 
