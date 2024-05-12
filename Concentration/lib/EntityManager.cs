@@ -33,7 +33,6 @@ public class EntityManager : ISystemManager {
 
         m_EntitiesToAdd.Clear();
         m_EntitiesToRemove.Clear();
-    
     }
 
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {

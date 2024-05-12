@@ -54,7 +54,9 @@ public class Concentration : Game
         // TODO: Add your drawing code here'
 
         //This is test code that will be removed, however, it does seem to work
-        _spriteBatch.Begin();
+        //_spriteBatch.Begin();
+        //wtf do these arguments even do?
+        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, null, null, null);
         Console.WriteLine(gameTime.TotalGameTime.TotalMilliseconds);
         _cardManager.Draw(_spriteBatch, gameTime);
         _spriteBatch.End();
