@@ -32,7 +32,7 @@ public class GameManager {
             case 1:
             Console.WriteLine("Step 1");
             if (cardManager.TwoCardsSelected()) {
-                stepper.RunWithDelay(gameTime, 2.0);
+                stepper.RunWithDelay(gameTime, 1.2);
             }
             break;
 

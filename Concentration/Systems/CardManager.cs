@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Threading;
 using Concentration.Entities;
 using Concentration.lib;
@@ -10,7 +11,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class CardManager : EntityManager
 {
-    const int scale = 2;
+    const int scale = Constants.GameConstants.kCardScale;
+    const int xOffset = 
+        (Constants.DisplayConstants.kDisplayWidth - (13*(scale * 25 + 2) - 2)) / 2;
+    const int yOffset =
+        (Constants.DisplayConstants.kDisplayHeight - (4*(scale * 36 + 2) - 2)) / 2;
     private Deck deck;
     private List<Card> flippedCards = new List<Card>();
     public CardManager(Texture2D spritesheet) {
@@ -23,15 +28,15 @@ public class CardManager : EntityManager
         int xInterval = (scale * 25) + 2;//27;
         int cardsInRow = 13;
         Console.WriteLine("Working...");
-        int x = 0;
-        int y = 0;
+        int x = 0 + xOffset;
+        int y = 0 + yOffset;
         int i = 1;
         foreach (Card card in deck.get()) {
             card.setPosition(new Vector2(x, y));
             RegisterEntity(card);
             x += xInterval; 
             if (i % cardsInRow == 0) {
-                x = 0;
+                x = 0 + xOffset;
             }
             if (i % cardsInRow == 0) {
                 y += yInterval;

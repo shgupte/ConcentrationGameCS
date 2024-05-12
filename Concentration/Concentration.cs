@@ -20,6 +20,12 @@ public class Concentration : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        _graphics.PreferredBackBufferHeight = Constants.DisplayConstants.kDisplayHeight;
+        _graphics.PreferredBackBufferWidth = Constants.DisplayConstants.kDisplayWidth;
+        //
+       //  _graphics.PreferredBackBufferHeight = GraphicsDevice.DisplayMode.Height;//
+        //_graphics.PreferredBackBufferWidth = GraphicsDevice.DisplayMode.Width;//Constants.DisplayConstants.kDisplayWidth;
+        _graphics.ApplyChanges();
     }
 
     protected override void Initialize() {

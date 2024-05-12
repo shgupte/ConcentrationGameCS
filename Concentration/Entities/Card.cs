@@ -27,7 +27,7 @@ public enum CardState {
 
 //At some point I should rewrite some of these definitions to make getters and setters consistent.
 public class Card : IGameEntity {
-    const int scale = 2;
+    const int scale = Constants.GameConstants.kCardScale;
     bool locked = false;
     const int height = 36;
     const int width = 25;
