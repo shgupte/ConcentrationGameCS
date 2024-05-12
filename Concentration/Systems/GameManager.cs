@@ -15,7 +15,7 @@ public class GameManager {
         cardManager.ResetCardStates();
     }
 
-    public void ExecuteGameLogic() {
+    public void ExecuteGameLogic(GameTime gameTime) {
 
         if (cardManager.GetCardsRemaining() == 0) {
             Console.WriteLine("Game is finished");
@@ -38,6 +38,7 @@ public class GameManager {
 
             case 2:
             Console.WriteLine("Step 2");
+            
             if (cardManager.CheckFlippedCardsSimilar()) {
                 cardManager.DespawnFlippedCards();
             } else {
@@ -56,6 +57,6 @@ public class GameManager {
     public void Update(GameTime gameTime) {
         cardManager.UpdateEntities(gameTime);
         cardManager.UpdateCardLocks();
-        ExecuteGameLogic();
+        ExecuteGameLogic(gameTime);
     }
 }

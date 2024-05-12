@@ -10,6 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class CardManager : EntityManager
 {
+    const int scale = 2;
     private Deck deck;
     private List<Card> flippedCards = new List<Card>();
     public CardManager(Texture2D spritesheet) {
@@ -18,8 +19,8 @@ public class CardManager : EntityManager
 
     //YAY This function works!
     public void Initialize() {
-        int yInterval = 38;
-        int xInterval = 27;
+        int yInterval = (scale * 36) + 2; //38;
+        int xInterval = (scale * 25) + 2;//27;
         int cardsInRow = 13;
         Console.WriteLine("Working...");
         int x = 0;

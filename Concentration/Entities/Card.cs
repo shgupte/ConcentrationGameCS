@@ -27,9 +27,12 @@ public enum CardState {
 
 //At some point I should rewrite some of these definitions to make getters and setters consistent.
 public class Card : IGameEntity {
+    const int scale = 2;
     bool locked = false;
     const int height = 36;
     const int width = 25;
+    const int scaledHeight = height * scale;
+    const int scaledWidth = width * scale;
     IOptional<Vector2> position = Optional.Empty<Vector2>();
     private Texture2D spritesheet;
     public CardSuit suit;
@@ -110,7 +113,7 @@ public class Card : IGameEntity {
 
     public Rectangle GetSpace() {
         if (!position.IsEmpty()) {
-            return new Rectangle(GetPosition().ToPoint(), new Point(width, height));
+            return new Rectangle(GetPosition().ToPoint(), new Point(scaledWidth, scaledHeight));
         } else {
             throw new Exception();
         }
@@ -146,7 +149,19 @@ public class Card : IGameEntity {
         if (position.IsEmpty()) {
             return;
         }
-        spriteBatch.Draw(spritesheet, position.GetValueOrElse(()=> new Vector2(0, 0)), getSheetSpace(), Color.White);
+        /*spriteBatch.Draw(
+            spritesheet,
+            position.GetValueOrElse(()=> new Vector2(0, 0)),
+            getSheetSpace(),
+            Color.White,
+            0.0,
+            sdad);*/
+        spriteBatch.Draw(
+            spritesheet,
+            new Rectangle(new Point((int)GetPosition().X, (int)GetPosition().Y), new Point(scaledWidth, scaledHeight)),
+            getSheetSpace(),
+            Color.White
+        );
     }
     public void Update(GameTime gameTime)
     {       
