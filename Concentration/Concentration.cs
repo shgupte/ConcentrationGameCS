@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Concentration.lib;
 using Concentration.Entities;
+using System;
 
 namespace Concentration;
 
@@ -54,7 +55,7 @@ public class Concentration : Game
 
         //This is test code that will be removed, however, it does seem to work
         _spriteBatch.Begin();
-
+        Console.WriteLine(gameTime.TotalGameTime.TotalMilliseconds);
         _cardManager.Draw(_spriteBatch, gameTime);
         _spriteBatch.End();
 

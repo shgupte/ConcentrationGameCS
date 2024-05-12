@@ -6,13 +6,13 @@ public class GameManager {
 
     private int turnStep = 0;
     private int maxSteps = 3;
-
     public int turns = 0;
-
-    CardManager cardManager;
+    private DelayedAction stepper;    
+    private CardManager cardManager;
     public GameManager(CardManager manager) {
         this.cardManager = manager;
         cardManager.ResetCardStates();
+        stepper = new DelayedAction(() => turnStep++);
     }
 
     public void ExecuteGameLogic(GameTime gameTime) {
@@ -26,13 +26,13 @@ public class GameManager {
             case 0:
             Console.WriteLine("Step 0");
             cardManager.ResetCardStates();
-            turnStep++;
+            stepper.Run();
             break;
 
             case 1:
             Console.WriteLine("Step 1");
             if (cardManager.TwoCardsSelected()) {
-                turnStep++;
+                stepper.RunWithDelay(gameTime, 2.0);
             }
             break;
 
@@ -45,7 +45,7 @@ public class GameManager {
                 cardManager.ResetCardStates();
             }
             turns++;
-            turnStep++;
+            stepper.Run();
             break;
 
             default:
