@@ -1,23 +1,31 @@
+
 using System;
+using System.Net.NetworkInformation;
 using Concentration.lib;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
 public class Button : IGameEntity{
 
     Action action;
     SingledInput input;
-    Texture2D texture;
-    Vector2 position;
+    ScaledSprite sprite;
 
-
+    public Button(SingledInput input, Action action, ScaledSprite sprite) {
+        this.sprite = sprite;
+        this.input = input;
+        this.action = action;
+    }
     public void Draw(SpriteBatch spriteBatch, GameTime gameTime)
     {
-        throw new NotImplementedException();
+        sprite.Draw(spriteBatch);
     }
 
     public void Update(GameTime gameTime)
     {
-        throw new NotImplementedException();
+        if (sprite.GetSpace().Contains(Inputs.GetMouseCoords()) && input.Get()) {
+            action();
+        }
     }
 }

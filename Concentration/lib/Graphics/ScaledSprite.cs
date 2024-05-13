@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
 public class ScaledSprite{
-     public Texture2D Texture { get; set; }
+        public Texture2D Texture { get; set; }
 
         public int X { get; set; }
         public int Y { get; set; }
@@ -28,10 +28,10 @@ public class ScaledSprite{
             RelativeScale = scale;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Vector2 position)
+        public void Draw(SpriteBatch spriteBatch)
         {
 
-            spriteBatch.Draw(Texture, position, new Rectangle(X, Y, Width * RelativeScale, Height * RelativeScale), TintColor);
+            spriteBatch.Draw(Texture, new Rectangle(X, Y, Width * RelativeScale, Height * RelativeScale), TintColor);
 
         }
 
@@ -40,5 +40,10 @@ public class ScaledSprite{
             this.Width = sprite.Width;
             this.RelativeScale = sprite.RelativeScale;
         }
+
+        public Rectangle GetSpace() {
+            return new Rectangle(new Point(X, Y), new Point(Width*RelativeScale, Height*RelativeScale));
+        }
+
 
 }
