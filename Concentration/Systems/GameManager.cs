@@ -7,12 +7,19 @@ public class GameManager {
     private int turnStep = 0;
     private int maxSteps = 3;
     public int turns = 0;
+    public GameState state = GameState.START;
     private DelayedAction stepper;    
     private CardManager cardManager;
+
+    
     public GameManager(CardManager manager) {
         this.cardManager = manager;
         cardManager.ResetCardStates();
         stepper = new DelayedAction(() => turnStep++);
+    }
+
+    public void ExecuteMenuLogic() {
+        
     }
 
     public void ExecuteGameLogic(GameTime gameTime) {
@@ -25,10 +32,15 @@ public class GameManager {
         switch (turnStep % maxSteps) {
             case 0:
             Console.WriteLine("Step 0");
-            cardManager.ResetCardStates();
-            stepper.Run();
-            break;
-
+            if (cardManager.GetCardsRemaining() < 1) {
+                state = GameState.END;
+                break;
+            } else {
+                cardManager.ResetCardStates();
+                stepper.Run();
+                break;
+            }
+            
             case 1:
             Console.WriteLine("Step 1");
             if (cardManager.TwoCardsSelected()) {
@@ -38,7 +50,6 @@ public class GameManager {
 
             case 2:
             Console.WriteLine("Step 2");
-            
             if (cardManager.CheckFlippedCardsSimilar()) {
                 cardManager.DespawnFlippedCards();
             } else {

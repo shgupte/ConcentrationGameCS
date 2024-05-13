@@ -1,4 +1,4 @@
-namespace GameState;
+//namespace GameState;
 
 public enum GameState {
     START,

@@ -63,7 +63,7 @@ public class Card : IGameEntity {
         Rectangle rect = new Rectangle(new Point(0, 0), new Point(0, 0));
 
         if (state == CardState.HIDDEN) {
-            rect = new Rectangle(14 * width, 3 * py, width, height);
+            rect = new Rectangle(14 * width, 3 * height, width, height);
         }
         
         if (state == CardState.FLIPPED) {
@@ -149,13 +149,6 @@ public class Card : IGameEntity {
         if (position.IsEmpty()) {
             return;
         }
-        /*spriteBatch.Draw(
-            spritesheet,
-            position.GetValueOrElse(()=> new Vector2(0, 0)),
-            getSheetSpace(),
-            Color.White,
-            0.0,
-            sdad);*/
         spriteBatch.Draw(
             spritesheet,
             new Rectangle(new Point((int)GetPosition().X, (int)GetPosition().Y), new Point(scaledWidth, scaledHeight)),
