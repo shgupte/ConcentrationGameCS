@@ -5,7 +5,4 @@ namespace Concentration.lib;
 
 public interface ISystemManager {
     void UpdateEntities(GameTime gameTime);
-    
-
-
 }
