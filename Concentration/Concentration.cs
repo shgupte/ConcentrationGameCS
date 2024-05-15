@@ -13,6 +13,7 @@ public class Concentration : Game
     private GraphicsDeviceManager _graphics;
     private SpriteBatch _spriteBatch;
     private Texture2D _cardSheet;
+    private Texture2D _buttons;
     private CardManager _cardManager;
     private GameManager _gameManager;
 
@@ -37,10 +38,12 @@ public class Concentration : Game
     protected override void LoadContent() {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _cardSheet = Content.Load<Texture2D>("CuteCardsPixel");
+        _buttons = Content.Load<Texture2D>("CuteCards");
+        SpriteStore.RegisterSprite("Button", _buttons);
        
         // TODO: use this.Content to load your game content here
         _cardManager = new CardManager(_cardSheet);
-        _cardManager.Initialize();
+       // _cardManager.Initialize();
         _gameManager = new GameManager(_cardManager);
 
     }

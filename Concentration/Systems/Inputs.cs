@@ -9,10 +9,10 @@ using System;
 public static class Inputs {
 
   //Do NOT put any print statement that include uses of SingledInput "Get()" function.
-   private static SingledInput MouseLeft = new SingledInput(
+   public static SingledInput MouseLeft = new SingledInput(
      () => Mouse.GetState().LeftButton == ButtonState.Pressed);
 
-   private static SingledInput MouseRight = new SingledInput(
+   public static SingledInput MouseRight = new SingledInput(
      () => Mouse.GetState().RightButton == ButtonState.Pressed);
 
    public static Point GetMouseCoords() {

@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using Concentration.lib;
 using Microsoft.Xna.Framework;
 
@@ -10,15 +11,38 @@ public class GameManager {
     public GameState state = GameState.START;
     private DelayedAction stepper;    
     private CardManager cardManager;
-
+    private MenuManager menuManager;
+    private List<Button> menuButtons = new List<Button>(); 
     
     public GameManager(CardManager manager) {
+        
+        menuButtons.Add(
+            new Button(
+            Inputs.MouseLeft,
+            ()=> state = GameState.PLAYING,
+            new ScaledSprite(
+                SpriteStore.GetSprite("Button"),
+                (int) Constants.DisplayConstants.kDisplayWidth / 2,
+                (int) Constants.DisplayConstants.kDisplayHeight / 2,
+                50,
+                50,
+                3
+            )
+          )  
+        );
+
+        this.menuManager = new MenuManager(menuButtons);
         this.cardManager = manager;
         cardManager.ResetCardStates();
         stepper = new DelayedAction(() => turnStep++);
     }
 
-    public void ExecuteMenuLogic() {
+    public void ExecuteMenuLogic(GameTime gameTime) {
+        menuManager.UpdateEntities(gameTime);
+        if (state == GameState.PLAYING) {
+            cardManager.Initialize();
+            menuManager.ClearMenu();
+        }
         
     }
 
@@ -65,9 +89,19 @@ public class GameManager {
         }
     }
 
+    public void ExecuteEndLogic(GameTime gameTime) {
+
+    }
+
     public void Update(GameTime gameTime) {
         cardManager.UpdateEntities(gameTime);
         cardManager.UpdateCardLocks();
-        ExecuteGameLogic(gameTime);
+        if (state == GameState.START) {
+            ExecuteMenuLogic(gameTime);
+        } else if (state == GameState.PLAYING) {
+            ExecuteGameLogic(gameTime);
+        } else if (state == GameState.END) {
+            ExecuteEndLogic(gameTime);
+        }
     }
 }
