@@ -1,6 +1,4 @@
 using System;
-using System.Dynamic;
-using System.Threading;
 
 public class SingledInput {
 

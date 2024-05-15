@@ -55,7 +55,7 @@ public class GameManager {
 
         switch (turnStep % maxSteps) {
             case 0:
-            Console.WriteLine("Step 0");
+            //Console.WriteLine("Step 0");
             if (cardManager.GetCardsRemaining() < 1) {
                 state = GameState.END;
                 break;
@@ -66,20 +66,21 @@ public class GameManager {
             }
             
             case 1:
-            Console.WriteLine("Step 1");
+            //Console.WriteLine("Step 1");
             if (cardManager.TwoCardsSelected()) {
                 stepper.RunWithDelay(gameTime, 1.2);
             }
             break;
 
             case 2:
-            Console.WriteLine("Step 2");
+            //Console.WriteLine("Step 2");
             if (cardManager.CheckFlippedCardsSimilar()) {
                 cardManager.DespawnFlippedCards();
             } else {
                 cardManager.ResetCardStates();
             }
             turns++;
+            Console.WriteLine("This many turns have passed: " + turns);
             stepper.Run();
             break;
 
@@ -90,7 +91,7 @@ public class GameManager {
     }
 
     public void ExecuteEndLogic(GameTime gameTime) {
-
+        Console.WriteLine("You took " + turns + " to finsih match all of the pairs.");
     }
 
     public void Update(GameTime gameTime) {
