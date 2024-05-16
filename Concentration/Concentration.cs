@@ -38,8 +38,8 @@ public class Concentration : Game
     protected override void LoadContent() {
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _cardSheet = Content.Load<Texture2D>("CuteCardsPixel");
-        _buttons = Content.Load<Texture2D>("CuteCards");
-        SpriteStore.RegisterSprite("Button", _buttons);
+        _buttons = Content.Load<Texture2D>("ConcentrationPlayButton");
+        SpriteStore.RegisterSprite("ConcentrationPlayButton", _buttons);
        
         // TODO: use this.Content to load your game content here
         _cardManager = new CardManager(_cardSheet);
@@ -66,7 +66,8 @@ public class Concentration : Game
         //_spriteBatch.Begin();
         //wtf do these arguments even do?
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, null, null, null);
-        _cardManager.Draw(_spriteBatch, gameTime);
+        //_cardManager.Draw(_spriteBatch, gameTime);
+        _gameManager.Draw(_spriteBatch, gameTime);
         _spriteBatch.End();
 
         base.Draw(gameTime);

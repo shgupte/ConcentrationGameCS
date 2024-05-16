@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using Concentration.lib;
 using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 
 public class GameManager {
 
@@ -16,16 +17,17 @@ public class GameManager {
     
     public GameManager(CardManager manager) {
         
+        //Make this something that is actually readable
         menuButtons.Add(
             new Button(
             Inputs.MouseLeft,
             ()=> state = GameState.PLAYING,
             new ScaledSprite(
-                SpriteStore.GetSprite("Button"),
-                (int) Constants.DisplayConstants.kDisplayWidth / 2,
-                (int) Constants.DisplayConstants.kDisplayHeight / 2,
-                50,
-                50,
+                SpriteStore.GetSprite("ConcentrationPlayButton"),
+                (Constants.DisplayConstants.kDisplayWidth - 128*3) / 2,//(int) Constants.DisplayConstants.kDisplayWidth / 2,
+                (Constants.DisplayConstants.kDisplayHeight - 64*3) / 2,//(int) Constants.DisplayConstants.kDisplayHeight / 2,
+                128,
+                64,
                 3
             )
           )  
@@ -43,9 +45,17 @@ public class GameManager {
             cardManager.Initialize();
             menuManager.ClearMenu();
         }
-        
     }
 
+    public void Draw(SpriteBatch spriteBatch, GameTime gameTime) {
+        if (state == GameState.START) {
+            menuManager.Draw(spriteBatch, gameTime);
+        } else if (state == GameState.PLAYING) {
+            cardManager.Draw(spriteBatch, gameTime);
+        }
+    }
+
+    //Manages all of the game logic (there isn't much of it) in a switch case for several states
     public void ExecuteGameLogic(GameTime gameTime) {
 
         if (cardManager.GetCardsRemaining() == 0) {
