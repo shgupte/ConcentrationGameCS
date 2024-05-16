@@ -15,7 +15,7 @@ public class GameManager {
     private MenuManager menuManager;
     private List<Button> menuButtons = new List<Button>(); 
     
-    public GameManager(CardManager manager) {
+    public GameManager() {
         
         //Make this something that is actually readable
         menuButtons.Add(
@@ -24,17 +24,16 @@ public class GameManager {
             ()=> state = GameState.PLAYING,
             new ScaledSprite(
                 SpriteStore.GetSprite("ConcentrationPlayButton"),
-                (Constants.DisplayConstants.kDisplayWidth - 128*3) / 2,//(int) Constants.DisplayConstants.kDisplayWidth / 2,
-                (Constants.DisplayConstants.kDisplayHeight - 64*3) / 2,//(int) Constants.DisplayConstants.kDisplayHeight / 2,
+                (Constants.DisplayConstants.kDisplayWidth - 128) / 2,
+                (Constants.DisplayConstants.kDisplayHeight - 64) / 2,
                 128,
-                64,
-                3
+                64
             )
           )  
         );
 
         this.menuManager = new MenuManager(menuButtons);
-        this.cardManager = manager;
+        this.cardManager = new CardManager(SpriteStore.GetSprite("CuteCardsPixel"));
         cardManager.ResetCardStates();
         stepper = new DelayedAction(() => turnStep++);
     }

@@ -9,14 +9,19 @@ public static class Constants {
 
         //Should be able to get rid of this scaling crap soon with the RenderTarget2D
         
-        public const int kCardScale = (int) (DisplayConstants.kDisplayWidth / 400);
+        public const int kCardScale = 1;
 
-        public const int kButtonScale = 3;
+        public const int kButtonScale = 1;
     }
 
     public static class DisplayConstants {
-        public const int kDisplayScale = 1;
-        public const int kDisplayHeight = 720;
-        public const int kDisplayWidth = 1280;
+
+        //The ones labeled display are actually used for rendering
+        public const int kDisplayHeight = 360;
+        public const int kDisplayWidth = 640;
+
+        public const int kWindowWidth = 1280;
+        public const int kWindowHeight = 720;
+        
     }
 }
