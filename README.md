@@ -1,2 +1,2 @@
 # ConcentrationGameCS
- A game where you concentrate, but in C#.
+ A game where you concentrate, but in C#. Built using the Monogame framework. This game, in its current state, is a solitaire version of the game "Concentration", where the goal is to match pairs of cards that share a color and number. I hope to eventually add a multiplayer version, but that is a goal for the future as I am currently prioritizing clean game logic and then smooth animations and sound effects.

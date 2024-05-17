@@ -9,6 +9,7 @@ using Concentration.lib;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
+/** This class sets up all of the cards for play and manages their states. */
 public class CardManager : EntityManager
 {
     const float scale = Constants.GameConstants.kCardScale;

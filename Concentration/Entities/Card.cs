@@ -116,7 +116,7 @@ public class Card : IGameEntity {
             return new Rectangle(
                 new Point((int) (GetPosition().X * scale), (int) (GetPosition().Y * scale)),
                 //GetPosition().ToPoint(),
-                new Point((int) ((float) scaledWidth * scale), (int) ((float) scaledHeight * scale)));
+                new Point((int) (scaledWidth * scale), (int) (scaledHeight * scale)));
         } else {
             throw new Exception();
         }
