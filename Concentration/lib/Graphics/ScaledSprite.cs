@@ -38,7 +38,11 @@ public class ScaledSprite{
         }
 
         public Rectangle GetSpace() {
-            return new Rectangle(new Point(X, Y), new Point(Width, Height));
+            float scale = Scaling.Scale;
+            return new Rectangle(
+                new Point((int) ((float) X * scale), (int) ((float) Y * scale)),
+                new Point((int) ((float) Width * scale), (int) ((float) Height * scale))
+            );
         }
 
 

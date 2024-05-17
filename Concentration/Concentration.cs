@@ -18,8 +18,10 @@ public class Concentration : Game
     private Texture2D _buttons;
     private GameManager _gameManager;
     private Rectangle _targetRect;
+    private Matrix _scalingMatrix;
 
     public Concentration() {
+        _scalingMatrix = Matrix.CreateScale(1.0f);
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
@@ -45,6 +47,11 @@ public class Concentration : Game
         // TODO: Add your initialization logic here
         base.Initialize();
         CalculateDisplayTarget();
+        Scaling.UpdateScaleMatrix(
+            Constants.DisplayConstants.kDisplayWidth,
+            Constants.DisplayConstants.kDisplayHeight,
+            GraphicsDevice
+        );
     }
 
     protected override void LoadContent() {
@@ -78,18 +85,21 @@ public class Concentration : Game
         //This is test code that will be removed, however, it does seem to work
         //_spriteBatch.Begin();
         //CalculateDisplayTarget();
-        GraphicsDevice.SetRenderTarget(_renderTarget);
+
+        /*GraphicsDevice.SetRenderTarget(_renderTarget);
         GraphicsDevice.Clear(Color.CornflowerBlue);
         _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, null, null, null);
         _gameManager.Draw(_spriteBatch, gameTime);
-        _spriteBatch.End();
+        _spriteBatch.End();*/
 
-        GraphicsDevice.SetRenderTarget(null);
+        //GraphicsDevice.SetRenderTarget(null);
 
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        _spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, null, null, null);
-        _spriteBatch.Draw(_renderTarget, _targetRect, Color.White);
+        //_spriteBatch.Begin(SpriteSortMode.Deferred, BlendState.AlphaBlend, SamplerState.PointClamp, DepthStencilState.Default, null, null, null);
+        //_spriteBatch.Draw(_renderTarget, _targetRect, Color.White);
+        _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Scaling.ScalingMatrix);
+        _gameManager.Draw(_spriteBatch, gameTime);
         _spriteBatch.End();
 
         base.Draw(gameTime);

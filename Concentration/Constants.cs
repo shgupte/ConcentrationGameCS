@@ -9,7 +9,7 @@ public static class Constants {
 
         //Should be able to get rid of this scaling crap soon with the RenderTarget2D
         
-        public const int kCardScale = 1;
+        public const float kCardScale = 1.5f;
 
         public const int kButtonScale = 1;
     }

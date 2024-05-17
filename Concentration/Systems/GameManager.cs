@@ -21,7 +21,7 @@ public class GameManager {
         menuButtons.Add(
             new Button(
             Inputs.MouseLeft,
-            ()=> state = GameState.PLAYING,
+            () => state = GameState.PLAYING,
             new ScaledSprite(
                 SpriteStore.GetSprite("ConcentrationPlayButton"),
                 (Constants.DisplayConstants.kDisplayWidth - 128) / 2,

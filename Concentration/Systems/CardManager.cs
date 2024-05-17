@@ -11,11 +11,11 @@ using Microsoft.Xna.Framework.Graphics;
 
 public class CardManager : EntityManager
 {
-    const int scale = Constants.GameConstants.kCardScale;
+    const float scale = Constants.GameConstants.kCardScale;
     const int xOffset = 
-        (Constants.DisplayConstants.kDisplayWidth - (13*(scale * 25 + 2) - 2)) / 2;
+        (Constants.DisplayConstants.kDisplayWidth - (int) (13*(scale * 25 + 2) - 2)) / 2;
     const int yOffset =
-        (Constants.DisplayConstants.kDisplayHeight - (4*(scale * 36 + 2) - 2)) / 2;
+        (Constants.DisplayConstants.kDisplayHeight - (int) (4*(scale * 36 + 2) - 2)) / 2;
     private Deck deck;
     private List<Card> flippedCards = new List<Card>();
     public CardManager(Texture2D spritesheet) {
@@ -24,8 +24,8 @@ public class CardManager : EntityManager
 
     //YAY This function works!
     public void Initialize() {
-        int yInterval = (scale * 36) + 2; //38;
-        int xInterval = (scale * 25) + 2;//27;
+        int yInterval = (int)(scale * 36) + 2; //38;
+        int xInterval = (int)(scale * 25) + 2;//27;
         int cardsInRow = 13;
         Console.WriteLine("Working...");
         int x = 0 + xOffset;

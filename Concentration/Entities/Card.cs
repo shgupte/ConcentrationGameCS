@@ -30,8 +30,8 @@ public class Card : IGameEntity {
     bool locked = false;
     const int height = 36;
     const int width = 25;
-    //const int scaledHeight = height;
-    //const int scaledWidth = width;
+    const int scaledHeight = (int)(height*Constants.GameConstants.kCardScale);
+    const int scaledWidth = (int)(width*Constants.GameConstants.kCardScale);
     IOptional<Vector2> position = Optional.Empty<Vector2>();
     private Texture2D spritesheet;
     public CardSuit suit;
@@ -111,8 +111,12 @@ public class Card : IGameEntity {
     }
 
     public Rectangle GetSpace() {
+        float scale = Scaling.Scale;
         if (!position.IsEmpty()) {
-            return new Rectangle(GetPosition().ToPoint(), new Point(width, height));
+            return new Rectangle(
+                new Point((int) (GetPosition().X * scale), (int) (GetPosition().Y * scale)),
+                //GetPosition().ToPoint(),
+                new Point((int) ((float) scaledWidth * scale), (int) ((float) scaledHeight * scale)));
         } else {
             throw new Exception();
         }
@@ -150,7 +154,7 @@ public class Card : IGameEntity {
         }
         spriteBatch.Draw(
             spritesheet,
-            new Rectangle(new Point((int)GetPosition().X, (int)GetPosition().Y), new Point(width, height)),
+            new Rectangle(new Point((int)GetPosition().X, (int)GetPosition().Y), new Point(scaledWidth, scaledHeight)),
             getSheetSpace(),
             Color.White
         );
