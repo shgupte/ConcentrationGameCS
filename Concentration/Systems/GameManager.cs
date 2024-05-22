@@ -24,10 +24,10 @@ public class GameManager {
             () => state = GameState.PLAYING,
             new ScaledSprite(
                 SpriteStore.GetSprite("ConcentrationPlayButton"),
-                (Constants.DisplayConstants.kDisplayWidth - 128) / 2,
-                (Constants.DisplayConstants.kDisplayHeight - 64) / 2,
-                128,
-                64
+                (Constants.DisplayConstants.kDisplayWidth - Constants.GameConstants.kStartButtonWidth) / 2,
+                (Constants.DisplayConstants.kDisplayHeight - Constants.GameConstants.kStartButtonHeight) / 2,
+                Constants.GameConstants.kStartButtonWidth,
+                Constants.GameConstants.kStartButtonHeight
             )
           )  
         );

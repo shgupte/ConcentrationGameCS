@@ -12,6 +12,9 @@ public static class Constants {
         public const float kCardScale = 1.5f;
 
         public const int kButtonScale = 1;
+
+        public const int kStartButtonWidth = 128;
+        public const int kStartButtonHeight = 64;
     }
 
     public static class DisplayConstants {
