@@ -12,18 +12,23 @@ using Microsoft.Xna.Framework.Graphics;
 /** This class sets up all of the cards for play and manages their states. */
 public class CardManager : EntityManager
 {
+    //Constants are used for card visual setup
     const float scale = Constants.GameConstants.kCardScale;
     const int xOffset = 
         (Constants.DisplayConstants.kDisplayWidth - (int) (13*(scale * 25 + 2) - 2)) / 2;
     const int yOffset =
         (Constants.DisplayConstants.kDisplayHeight - (int) (4*(scale * 36 + 2) - 2)) / 2;
     private Deck deck;
+
+    //Keeps track of the cards that are currently flipped
     private List<Card> flippedCards = new List<Card>();
+
+    //Created a deck of 52 cards when initialized.
     public CardManager(Texture2D spritesheet) {
         this.deck = new Deck(spritesheet);
     }
 
-    //YAY This function works!
+    //Places cards across the screen at equal distance in order to set up the game
     public void Initialize() {
         int yInterval = (int)(scale * 36) + 2; //38;
         int xInterval = (int)(scale * 25) + 2;//27;
@@ -45,18 +50,22 @@ public class CardManager : EntityManager
             i++;
         }
     }
+
+    //Prevent cards from being flipped
     private void LockCards() {
         foreach (Card card in queryEntitiesOfType<Card>()) {
             card.Lock();
         }
     }
 
+    //Allow cards to be flipped
     private void UnlockCards() {
         foreach (Card card in queryEntitiesOfType<Card>()) {
             card.Unlock();
         }
     }
 
+    //Resets all card states
     public void ResetCardStates() {
         flippedCards.Clear();
         foreach (Card card in queryEntitiesOfType<Card>()) {
@@ -76,6 +85,7 @@ public class CardManager : EntityManager
         }
     }
 
+    //Determine if the two cards in the flipped cards list are scoreable
     public bool CheckFlippedCardsSimilar() {
         if (flippedCards.Count != 2) {
             return false;
@@ -89,10 +99,13 @@ public class CardManager : EntityManager
         }
     }
 
+
+    //How many cards are still left on the table
     public int GetCardsRemaining() {
         return GetLiveEntitiesCount();
     }
 
+    //Determine when two cards have been selected by the player
     public bool TwoCardsSelected() {
          int selected = 0;
 
@@ -105,6 +118,8 @@ public class CardManager : EntityManager
 
         //return (flippedCards.Count == 2);
     }
+
+    //Update card states
     public void UpdateCardLocks() {
         IEnumerable<Card> cards = queryEntitiesOfType<Card>();
         foreach (Card card1 in cards) {

@@ -25,6 +25,7 @@ public class Concentration : Game
         _graphics = new GraphicsDeviceManager(this);
         Content.RootDirectory = "Content";
         IsMouseVisible = true;
+        //Set window size to 720p default
         _graphics.PreferredBackBufferHeight = Constants.DisplayConstants.kWindowHeight;
         _graphics.PreferredBackBufferWidth = Constants.DisplayConstants.kWindowWidth;
         Window.AllowUserResizing = true;
@@ -40,6 +41,7 @@ public class Concentration : Game
         // TODO: Add your initialization logic here
         base.Initialize();
         CalculateDisplayTarget();
+        //Create scale matrix based on render target and display target
         Scaling.UpdateScaleMatrix(
             Constants.DisplayConstants.kDisplayWidth,
             Constants.DisplayConstants.kDisplayHeight,
@@ -48,17 +50,23 @@ public class Concentration : Game
     }
 
     protected override void LoadContent() {
+        //Load content from content editor
+        //Some stuff is loaded into my own static content manager
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _cardSheet = Content.Load<Texture2D>("CuteCardsPixel");
         _buttons = Content.Load<Texture2D>("ConcentrationPlayButton");
         SpriteStore.RegisterSprite("ConcentrationPlayButton", _buttons);
         SpriteStore.RegisterSprite("CuteCardsPixel", _cardSheet);
+        //Initialize game manager, should also initialize the cardmanager and menumanager
         _gameManager = new GameManager();
     }
 
+
     protected override void Update(GameTime gameTime) {
+        //Exit if we hit escape
         if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
+        //Update game logic through the game manager.
        _gameManager.Update(gameTime);
         base.Update(gameTime);
     }
@@ -66,6 +74,7 @@ public class Concentration : Game
     protected override void Draw(GameTime gameTime) {
     
         GraphicsDevice.Clear(Color.CornflowerBlue);
+        //Specify a transform matrix to ensure that everything is scaled to the screen.
         _spriteBatch.Begin(samplerState: SamplerState.PointClamp, transformMatrix: Scaling.ScalingMatrix);
         _gameManager.Draw(_spriteBatch, gameTime);
         _spriteBatch.End();
@@ -73,6 +82,7 @@ public class Concentration : Game
         base.Draw(gameTime);
     }
 
+    //This function is no longer used, but should still work if desired.
     private void CalculateDisplayTarget() {
         
         Point size = new Point(
