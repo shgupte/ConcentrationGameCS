@@ -18,6 +18,7 @@ public class GameManager {
     private DelayedAction stepper;    
     private CardManager cardManager;
     private MenuManager menuManager;
+    private ScoreManager scoreManager;
     private List<Button> menuButtons = new List<Button>(); 
     
     public GameManager() {
@@ -39,6 +40,7 @@ public class GameManager {
         );
 
         //Initialize all entity managers
+        this.scoreManager = new ScoreManager();
         this.menuManager = new MenuManager(menuButtons);
         this.cardManager = new CardManager(SpriteStore.GetSprite("CuteCardsPixel"));
         cardManager.ResetCardStates();
@@ -61,6 +63,7 @@ public class GameManager {
             menuManager.Draw(spriteBatch, gameTime);
         } else if (state == GameState.PLAYING) {
             cardManager.Draw(spriteBatch, gameTime);
+            scoreManager.Draw(spriteBatch, gameTime);
         }
     }
 
@@ -96,11 +99,13 @@ public class GameManager {
 
             if (cardManager.CheckFlippedCardsSimilar()) {
                 cardManager.DespawnFlippedCards();
+                scoreManager.Update(true);
             } else {
                 cardManager.ResetCardStates();
+                scoreManager.Update(false);
             }
             turns++;
-            Console.WriteLine("This many turns have passed: " + turns);
+            Console.WriteLine("Current Score:  " + scoreManager.GetScore());
             stepper.Run();
             break;
 

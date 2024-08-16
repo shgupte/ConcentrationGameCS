@@ -16,6 +16,7 @@ public class Concentration : Game
     private SpriteBatch _spriteBatch;
     private Texture2D _cardSheet;
     private Texture2D _buttons;
+    private SpriteFont _font;
     private GameManager _gameManager;
     private Rectangle _targetRect;
     private Matrix _scalingMatrix;
@@ -28,7 +29,7 @@ public class Concentration : Game
         //Set window size to 720p default
         _graphics.PreferredBackBufferHeight = Constants.DisplayConstants.kWindowHeight;
         _graphics.PreferredBackBufferWidth = Constants.DisplayConstants.kWindowWidth;
-        Window.AllowUserResizing = true;
+        Window.AllowUserResizing = false;
         _graphics.ApplyChanges();
         _renderTarget = new RenderTarget2D(
             GraphicsDevice,
@@ -55,8 +56,10 @@ public class Concentration : Game
         _spriteBatch = new SpriteBatch(GraphicsDevice);
         _cardSheet = Content.Load<Texture2D>("CuteCardsPixel");
         _buttons = Content.Load<Texture2D>("ConcentrationPlayButton");
+        _font = Content.Load<SpriteFont>("font");
         SpriteStore.RegisterSprite("ConcentrationPlayButton", _buttons);
         SpriteStore.RegisterSprite("CuteCardsPixel", _cardSheet);
+        SpriteStore.RegisterFont("font", _font);
         //Initialize game manager, should also initialize the cardmanager and menumanager
         _gameManager = new GameManager();
     }
